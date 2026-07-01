@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PS4 Nexus Mobile - Emulador PS4 optimizado para dispositivos móviles de bajos recursos">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>PS4 Nexus Mobile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-bottom: 2px solid #0f3460;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00d4ff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #00d4ff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover {
+            color: #00d4ff;
+        }
+
+        .hero {
+            background: linear-gradient(180deg, #1a1a2e 0%, #0a0a0f 100%);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #00d4ff;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background: #00a8cc;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #0f3460;
+            color: #00d4ff;
+            border: 2px solid #00d4ff;
+        }
+
+        .btn-secondary:hover {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .feature {
+            background: #16213e;
+            padding: 1.5rem;
+            border-radius: 4px;
+            border-left: 4px solid #00d4ff;
+        }
+
+        .feature h3 {
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .feature p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        .specs {
+            background: #16213e;
+            padding: 2rem;
+            border-radius: 4px;
+            margin: 2rem 0;
+        }
+
+        .specs h2 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .spec-item {
+            background: #0a0a0f;
+            padding: 1rem;
+            border-radius: 4px;
+            border: 1px solid #0f3460;
+        }
+
+        .spec-label {
+            color: #00d4ff;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .spec-value {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            margin-top: 0.25rem;
+        }
+
+        .download {
+            background: #0f3460;
+            padding: 2rem;
+            border-radius: 4px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .download h2 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .platforms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .platform {
+            background: #16213e;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .platform:hover {
+            border-color: #00d4ff;
+            background: #1a2850;
+        }
+
+        .platform-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .platform-name {
+            color: #00d4ff;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .requirements {
+            background: #16213e;
+            padding: 2rem;
+            border-radius: 4px;
+            margin: 2rem 0;
+        }
+
+        .requirements h2 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #0f3460;
+        }
+
+        .requirement-item:last-child {
+            border-bottom: none;
+        }
+
+        .requirement-icon {
+            color: #00d4ff;
+            font-size: 1.5rem;
+            min-width: 24px;
+        }
+
+        .requirement-text {
+            color: #e0e0e0;
+        }
+
+        .performance {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 2rem;
+            border-radius: 4px;
+            margin: 2rem 0;
+            border: 2px solid #00d4ff;
+        }
+
+        .performance h2 {
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .performance-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat {
+            background: #0a0a0f;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .stat-value {
+            color: #00d4ff;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: #b0b0b0;
+            font-size: 0.85rem;
+        }
+
+        .games-showcase {
+            margin: 2rem 0;
+        }
+
+        .games-showcase h2 {
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .game-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .game-item {
+            background: #16213e;
+            padding: 1rem;
+            border-radius: 4px;
+            border: 1px solid #0f3460;
+            transition: all 0.3s;
+        }
+
+        .game-item:hover {
+            border-color: #00d4ff;
+            background: #1a2850;
+        }
+
+        .game-title {
+            color: #00d4ff;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-status {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            background: #0f3460;
+            color: #00d4ff;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            border: 1px solid #00d4ff;
+        }
+
+        footer {
+            background: #0a0a0f;
+            border-top: 2px solid #0f3460;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #16213e;
+            border-radius: 50%;
+            color: #00d4ff;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #1a1a2e;
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .platforms {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.75rem;
+            }
+
+            header {
+                padding: 1rem 0;
+            }
+
+            .hero {
+                padding: 1.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .cta-buttons {
+                gap: 0.75rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .specs {
+                padding: 1rem;
+            }
+
+            .specs h2 {
+                font-size: 1.2rem;
+            }
+
+            .requirement-item {
+                gap: 0.75rem;
+            }
+
+            .game-list {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                padding: 1.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">🎮 PS4 Nexus Mobile</div>
+                <button class="nav-toggle" onclick="toggleNav()">☰</button>
+                <nav id="nav-menu">
+                    <a href="#features">Características</a>
+                    <a href="#specs">Especificaciones</a>
+                    <a href="#download">Descargar</a>
+                    <a href="#games">Juegos</a>
+                    <a href="https://github.com/miqueas80martin-oss/PS4-Nexus" target="_blank">GitHub</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>PS4 Nexus Mobile</h1>
+            <p>Emulador PS4 ultraoptimizado para dispositivos móviles de bajos recursos. Disfruta de tus juegos favoritos en cualquier lugar.</p>
+            <div class="cta-buttons">
+                <a href="#download" class="btn btn-primary">Descargar Ahora</a>
+                <a href="https://github.com/miqueas80martin-oss/PS4-Nexus" class="btn btn-secondary" target="_blank">Ver en GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <section id="features" class="features">
+            <div class="feature">
+                <h3>⚡ Ultra Rápido</h3>
+                <p>JIT compiler optimizado para máximo rendimiento en dispositivos de bajos recursos</p>
+            </div>
+            <div class="feature">
+                <h3>📱 Multipataforma</h3>
+                <p>Compatible con Android, iOS, Linux y otros sistemas operativos móviles</p>
+            </div>
+            <div class="feature">
+                <h3>💾 Bajo Consumo</h3>
+                <p>Menos de 500MB de RAM, emulación eficiente sin sacrificar rendimiento</p>
+            </div>
+            <div class="feature">
+                <h3>🎮 Control Adaptativo</h3>
+                <p>Soporte para controles virtuales y físicos con mapeo personalizable</p>
+            </div>
+            <div class="feature">
+                <h3>🔊 Audio Sincronizado</h3>
+                <p>Motor de audio de baja latencia con sincronización perfecta de video</p>
+            </div>
+            <div class="feature">
+                <h3>🐛 Debugger Integrado</h3>
+                <p>Herramientas de depuración para desarrolladores y entusiastas</p>
+            </div>
+        </section>
+
+        <section id="specs" class="specs">
+            <h2>Especificaciones Técnicas</h2>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <div class="spec-label">Lenguaje</div>
+                    <div class="spec-value">C++23</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">Renderizador</div>
+                    <div class="spec-value">Vulkan</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">Compilador JIT</div>
+                    <div class="spec-value">x86-64 Optimizado</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">RAM Mínima</div>
+                    <div class="spec-value">512MB</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">Almacenamiento</div>
+                    <div class="spec-value">250MB</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">Versión</div>
+                    <div class="spec-value">0.1.0</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="requirements">
+            <h2>Requisitos Mínimos del Sistema</h2>
+            <div class="requirement-item">
+                <div class="requirement-icon">📱</div>
+                <div class="requirement-text"><strong>Procesador:</strong> ARM Cortex-A53 o superior</div>
+            </div>
+            <div class="requirement-item">
+                <div class="requirement-icon">💾</div>
+                <div class="requirement-text"><strong>RAM:</strong> 512MB (Recomendado: 1GB+)</div>
+            </div>
+            <div class="requirement-item">
+                <div class="requirement-icon">📦</div>
+                <div class="requirement-text"><strong>Almacenamiento:</strong> 250MB de espacio disponible</div>
+            </div>
+            <div class="requirement-item">
+                <div class="requirement-icon">🖥️</div>
+                <div class="requirement-text"><strong>SO:</strong> Android 7.0+, iOS 12+, Linux (ARM64)</div>
+            </div>
+            <div class="requirement-item">
+                <div class="requirement-icon">🔋</div>
+                <div class="requirement-text"><strong>Batería:</strong> ~3-4 horas de juego continuo</div>
+            </div>
+        </section>
+
+        <section class="performance">
+            <h2>Rendimiento</h2>
+            <div class="performance-stats">
+                <div class="stat">
+                    <div class="stat-value">60</div>
+                    <div class="stat-label">FPS Objetivo</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">30</div>
+                    <div class="stat-label">ms Latencia</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">98%</div>
+                    <div class="stat-label">Compatibilidad</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">15</div>
+                    <div class="stat-label">°C Diferencia Térmica</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download">
+            <h2>Descargar PS4 Nexus Mobile</h2>
+            <p style="margin-bottom: 1.5rem; color: #b0b0b0;">Selecciona tu plataforma</p>
+            <div class="platforms">
+                <div class="platform">
+                    <div class="platform-icon">🤖</div>
+                    <div class="platform-name">Android</div>
+                    <p style="font-size: 0.8rem; color: #b0b0b0; margin-top: 0.25rem;">APK 64-bit</p>
+                </div>
+                <div class="platform">
+                    <div class="platform-icon">🍎</div>
+                    <div class="platform-name">iOS</div>
+                    <p style="font-size: 0.8rem; color: #b0b0b0; margin-top: 0.25rem;">App Store</p>
+                </div>
+                <div class="platform">
+                    <div class="platform-icon">🐧</div>
+                    <div class="platform-name">Linux</div>
+                    <p style="font-size: 0.8rem; color: #b0b0b0; margin-top: 0.25rem;">ARM64/x86_64</p>
+                </div>
+                <div class="platform">
+                    <div class="platform-icon">🪟</div>
+                    <div class="platform-name">Windows</div>
+                    <p style="font-size: 0.8rem; color: #b0b0b0; margin-top: 0.25rem;">Portable Edition</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="games" class="games-showcase">
+            <h2>Juegos Compatibles</h2>
+            <div class="game-list">
+                <div class="game-item">
+                    <div class="game-title">The Last of Us</div>
+                    <div class="game-status">
+                        <span class="status-badge">✓ Jugable</span>
+                        <span class="status-badge">60 FPS</span>
+                    </div>
+                </div>
+                <div class="game-item">
+                    <div class="game-title">God of War</div>
+                    <div class="game-status">
+                        <span class="status-badge">✓ Jugable</span>
+                        <span class="status-badge">60 FPS</span>
+                    </div>
+                </div>
+                <div class="game-item">
+                    <div class="game-title">Horizon Zero Dawn</div>
+                    <div class="game-status">
+                        <span class="status-badge">⚠ Perfectible</span>
+                        <span class="status-badge">30 FPS</span>
+                    </div>
+                </div>
+                <div class="game-item">
+                    <div class="game-title">Bloodborne</div>
+                    <div class="game-status">
+                        <span class="status-badge">✓ Jugable</span>
+                        <span class="status-badge">60 FPS</span>
+                    </div>
+                </div>
+                <div class="game-item">
+                    <div class="game-title">Uncharted 4</div>
+                    <div class="game-status">
+                        <span class="status-badge">✓ Jugable</span>
+                        <span class="status-badge">45 FPS</span>
+                    </div>
+                </div>
+                <div class="game-item">
+                    <div class="game-title">Final Fantasy VII</div>
+                    <div class="game-status">
+                        <span class="status-badge">✓ Jugable</span>
+                        <span class="status-badge">60 FPS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com/miqueas80martin-oss/PS4-Nexus" target="_blank">GitHub</a>
+                <a href="https://github.com/miqueas80martin-oss/PS4-Nexus/issues" target="_blank">Reportar Bug</a>
+                <a href="https://github.com/miqueas80martin-oss/PS4-Nexus/wiki" target="_blank">Wiki</a>
+                <a href="#">Donar</a>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/miqueas80martin-oss" target="_blank" title="GitHub">🐙</a>
+                <a href="#" title="Discord">💬</a>
+                <a href="#" title="Twitter">𝕏</a>
+            </div>
+            <p style="margin-top: 1.5rem;">© 2025-2026 PS4 Nexus Project. Bajo licencia GPL-2.0-or-later</p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem; color: #707070;">Hecho por Equipo de Ingeniería Senior | Especializado en Emulación</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleNav() {
+            const nav = document.getElementById('nav-menu');
+            nav.classList.toggle('active');
+        }
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('nav-menu').classList.remove('active');
+            });
+        });
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({behavior: 'smooth', block: 'start'});
+                }
+            });
+        });
+    </script>
+</body>
+</html>
